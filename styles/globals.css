@@ -14,3 +14,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+button {
+  font: Roboto;
+  font-weight: lighter;
+  font-size: 2rem;
+  height: 60px;
+
+  border-radius: 2px;
+  border-color: transparent;
+}

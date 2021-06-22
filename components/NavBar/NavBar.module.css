@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  width: 100vw;
+  height: fit-content;
+  background-color: #0000000a;
+}
+
+.tabsContainer {
+  display: flex;
+  width: fit-content;
+  padding: 1vh;
+}
+
+.tab {
+  display: flex;
+  padding: 1vh;
+}
