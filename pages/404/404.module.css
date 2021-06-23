@@ -17,13 +17,27 @@
   justify-content: center;
 }
 
+.mainBackground {
+  color: #00000088;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0; 
+  z-index: 1;
+}
+
+.fourOhFour {
+  display: flex;
+  flex-direction: column;
+  font-size: 15rem;
+}
+
 .mainContent {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
-  
-  min-width: 500px;
+
   width: 80vh;
 
   min-height: fit-content;
@@ -31,15 +45,22 @@
   
   margin: auto;
   padding: 1em;
+
+  z-index: 2;
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+
   margin: 1rem;
   padding: 1.5rem;
-  text-align: left;
-  color: inherit;
+
+  color: #fff;
   text-decoration: none;
-  border: 1px solid #eaeaea;
+  border: 1px solid #eaeaea22;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   width: 45%;
@@ -48,6 +69,7 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #fff;
+  border-color: #1c292e;
+  background-color: #1c292e ;
 }

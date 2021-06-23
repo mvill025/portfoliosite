@@ -2,7 +2,8 @@
   display: flex;
   width: 100vw;
   height: fit-content;
-  background-color: #0000000a;
+  background-color: #ffffff0a;
+  color: #ffffffee
 }
 
 .tabsContainer {

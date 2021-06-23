@@ -15,10 +15,13 @@ const NotFound = () => {
       <NavBar />
       <main className={styles.main}>
         <Link href="/" passHref>
-          <a className={styles.card}> 
-            <h1>UH OH! LOOKS LIKE YOU'RE LOST...</h1>
-            <h1>404 - PAGE NOT FOUND</h1>
-            <h1>BACK TO HOME</h1>
+          <a className={styles.card}>
+            <span className={styles.fourOhFour}>
+              <h1 style={{ fontSize: "1em", margin: "0 0 -4rem 0" }}>404</h1>
+              <h2 style={{ fontSize: "0.22em" }}>PAGE NOT FOUND</h2>
+            </span>
+            <h1>UH OH! Looks like you're lost!</h1>
+            <h1>LET'S GET YOU BACK HOME</h1>
           </a>
         </Link>
       </main>
