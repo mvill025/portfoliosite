@@ -1,0 +1,45 @@
+.main {
+  display: flex;
+
+}
+.projectsContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  margin: auto;
+  padding: 1rem;
+
+  column-gap: 1rem;
+  row-gap: 1rem;
+
+  max-width: 1500px;
+}
+
+.fourOhFour {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  
+  padding: 0rem 1.5rem;
+  
+  font-size: 1.7rem;
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #eaeaea6e;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  color: #fff;
+  border-color: #1c292e;
+  background-color: #1c292e ;
+}
