@@ -5,7 +5,9 @@ import React from 'react';
 import NavBar from '../../components/NavBar';
 import { Project, ProjectsProps } from './models';
 import styles from "./Projects.module.css";
-import GitHub from "../../public/GitHub-Mark-64px.png"
+import GitHubIcon from "../../public/GitHub-Mark-64px.png"
+import RIcon from "../../public/r-programming-language.png"
+import JupyterNotebookIcon from "../../public/Jupyter_logo.svg"
 
 const GitHubTag = () => (
   <div
@@ -13,10 +15,40 @@ const GitHubTag = () => (
     style={{ backgroundColor: "#fff" }}
   >
     <Image
-      src={GitHub}
+      src={GitHubIcon}
       alt="GitHub"
       height="22px"
       width="22px"
+      layout="fixed"
+    />
+  </div>
+)
+
+const JupyterNotebookTag = () => (
+  <div
+    className={styles.tagImage}
+    style={{ backgroundColor: "#ffffff" }}
+  >
+    <Image
+      src={JupyterNotebookIcon}
+      alt="GitHub"
+      height="22px"
+      width="22px"
+      layout="fixed"
+    />
+  </div>
+)
+
+const RTag = () => (
+  <div
+    className={styles.tagImage}
+    style={{ backgroundColor: "#1F40B4" }}
+  >
+    <Image
+      src={RIcon}
+      alt="R"
+      height="22px"
+      width="28px"
       layout="fixed"
     />
   </div>
@@ -49,6 +81,8 @@ const ProjectCard = ({ id, title, about, url, tags }: Project) => {
         {tags?.map(tag => {
           switch (tag) {
             case "github": return <GitHubTag key={tag} />
+            case "R": return <RTag key={tag} />
+            case "Jupyter Notebook": return <JupyterNotebookTag key={tag} />
             case null: return
             default: return <TextTag key={tag} text={tag} />
           }

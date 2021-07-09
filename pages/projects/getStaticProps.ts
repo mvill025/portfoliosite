@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
           /\w\S*/g,
           (a: string) => a.charAt(0).toUpperCase() + a.substr(1).toLowerCase()
         )
-      return {
+      var project: Project = {
         id: r.id,
         title,
         about: r.about ?? "No About",
@@ -29,6 +29,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
           r.language
         ]
       }
+
+      // add data analytics tag
+      if (r.language === "R" || r.language === "Jupyter Notebook") {
+        project.tags?.push("Data Analytics")
+      }
+
+      return project
     }))
   return {
     props: {
