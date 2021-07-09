@@ -11,7 +11,7 @@ interface Tab {
 const Tab = (tab: Tab) => {
   const { title, path } = tab;
   return (
-    <div className={styles.tab}>
+    <div className={styles.tab} key={title}>
       <Link href={path}>
         <a>
           <span>{title}</span>

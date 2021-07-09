@@ -9,4 +9,5 @@ export interface Project {
   title: string,
   about: string,
   url: string,
+  tags?: string[],
 }

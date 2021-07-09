@@ -11,7 +11,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     { sort: "updated" }
   )
     .then(r => r.data)
-    // .then(results => { console.log(results[0]); return results })
     .then(r => r.map((r: any) => {
       var title = r.name
         .replace(/\-/g, ' ')
@@ -24,14 +23,18 @@ export const getStaticProps: GetStaticProps = async (context) => {
         id: r.id,
         title,
         about: r.about ?? "No About",
-        url: r.html_url
+        url: r.html_url,
+        tags: [
+          "github",
+          r.language
+        ]
       }
     }))
   return {
     props: {
-      user,
       projects,
-    }
+    },
+    revalidate: 300,
   }
 }
 
