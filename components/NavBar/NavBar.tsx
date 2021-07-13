@@ -23,6 +23,7 @@ const Tab = (tab: Tab) => {
 
 const TABS: Tab[] = [
   { title: "HOME", path: "/" },
+  { title: "ABOUT", path: "about"},
   { title: "PROJECTS", path: "/projects" },
 ];
 

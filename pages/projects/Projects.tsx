@@ -27,7 +27,7 @@ const GitHubTag = () => (
 const JupyterNotebookTag = () => (
   <div
     className={styles.tagImage}
-    style={{ backgroundColor: "#ffffff" }}
+    style={{ backgroundColor: "#fff" }}
   >
     <Image
       src={JupyterNotebookIcon}
@@ -98,7 +98,7 @@ export const Projects = (props: ProjectsProps) => {
   } = props;
 
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>Awesome Projects</title>
       </Head>

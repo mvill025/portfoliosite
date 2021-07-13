@@ -1,14 +1,20 @@
 .container {
   display: flex;
+
   width: 100vw;
   height: fit-content;
+
   background-color: #ffffff0a;
   color: #ffffffee
 }
 
 .tabsContainer {
   display: flex;
-  width: fit-content;
+  
+  width: 100%;
+  max-width: 1450px;
+
+  margin: auto;
   padding: 1vh;
 }
 

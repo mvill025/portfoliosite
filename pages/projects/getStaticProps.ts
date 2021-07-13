@@ -37,6 +37,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
       return project
     }))
+    
   return {
     props: {
       projects,
