@@ -54,9 +54,24 @@ const RTag = () => (
   </div>
 )
 
+const TypeScriptTag = () => (
+  <div
+    className={styles.tagImage}
+    style={{ backgroundColor: "#1F40B4" }}
+  >
+    <Image
+      src={RIcon}
+      alt="R"
+      height="22px"
+      width="28px"
+      layout="fixed"
+    />
+  </div>
+)
+
 const TextTag = ({ text }: any) => (
   <div className={styles.tagText}>
-    <h2>{text}</h2>
+    <h3>{text}</h3>
   </div>
 )
 
@@ -64,18 +79,17 @@ const ProjectCard = ({ id, title, about, url, tags }: Project) => {
   return (
     <a className={styles.card} key={id} href={url} >
       <span>
-        <h1
+        <h2
           style={{
-            fontSize: "1em",
-            marginBottom: "-0.5em",
-            marginTop: "0.2em",
             whiteSpace: "nowrap",
-            overflow: "scroll",
+            overflowX: "hidden",
+            textOverflow: "ellipsis",
+            maxWidth: "97%",
           }}
         >
           {title}
-        </h1>
-        <h2 style={{ fontSize: "0.6em", height: "3em" }}>{about}</h2>
+        </h2>
+        <h3 className={styles.cardAbout}>{about}</h3>
       </span>
       <span className={styles.tagsContainer}>
         {tags?.map(tag => {

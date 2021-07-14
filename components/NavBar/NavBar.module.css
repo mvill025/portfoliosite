@@ -2,23 +2,56 @@
   display: flex;
 
   width: 100vw;
-  height: fit-content;
+  height: 5rem;
 
-  background-color: #ffffff0a;
+  background-color: #ffffff00;
   color: #ffffffee
 }
 
-.tabsContainer {
+.navContent{
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   
+  height: 100%;
   width: 100%;
   max-width: 1450px;
 
   margin: auto;
-  padding: 1vh;
+}
+
+.tabsContainer {
+  display: flex;
+  float: right;
+
+  height: 100%;
+}
+
+.tabContainer {
+  display: flex;
 }
 
 .tab {
   display: flex;
-  padding: 1vh;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+
+  font-size: 1.5em;
+
+  color: #fff;
+  background-color: transparent;
+
+  border-radius: 0;
+
+  transition: all .3s ease-out ;
+}
+
+.tab:hover,
+.tab:focus,
+.tab:active {
+  color: #fff;
+  background-color: #ffffff22 ;
+  transition: all .03s linear ;
 }
