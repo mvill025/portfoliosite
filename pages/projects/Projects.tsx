@@ -118,12 +118,13 @@ export const Projects = (props: ProjectsProps) => {
       </Head>
       <NavBar />
       <main className={styles.main}>
-        <div>
-          <h1>My Projects</h1>
-        </div>
+        <h1 style={{ margin: "0.2em 0" }}>My Projects</h1>
         <div className={styles.projectsContainer}>
           {projects.map(p => <ProjectCard key={p.id} {...p} />)}
         </div>
+        <p>
+          {JSON.stringify(projects[0], null, "\n")}
+        </p>
       </main>
     </div>
   )

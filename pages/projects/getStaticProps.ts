@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       var project: Project = {
         id: r.id,
         title,
-        about: r.about ?? "To have this test, you swallow a string with a weighted gelatin capsule on the end. The string is pulled out 4 hours later. Any bile, blood, or mucus attached to the string is examined under the microscope. This is done to look for cells and parasites or parasite eggs.",
+        about: r.description,
         url: r.html_url,
         tags: [
           "github",
@@ -39,13 +39,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
         project.tags?.push("Data Analytics")
       }
 
-      return project
+      return {
+        ...r,
+        ...project,
+      }
     }))
 
   return {
     props: {
       projects,
-      user
+      user,
     },
     revalidate: 300,
   }

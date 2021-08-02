@@ -14,7 +14,6 @@ export default function Home() {
       <NavBar />
       <main className={styles.main}>
         <div className={styles.intro}>
-          <h1>Hello</h1>
           <h1>Michael Ryan Santos Villanueva</h1>
           <h2> Mobile / Web / Data </h2>
         </div>
