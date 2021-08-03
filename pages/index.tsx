@@ -16,11 +16,19 @@ export default function Home() {
         <div className={styles.intro}>
           <h1>Michael Ryan Santos Villanueva</h1>
           <h2> Mobile / Web / Data </h2>
+          <h3 className={styles.introSubtitle}>
+            Software Developer based in Los Angeles, CA
+            <br />
+            Improving the world one line of code at a time.
+          </h3>
         </div>
-        <h3 className={styles.about}>
-          I am a software developer based in Los Angeles, CA looking to build
-          (and occasionally design) new applications and understand the data of the worlds.
-        </h3>
+        <div className={styles.aboutContainer}>
+          <h2>About</h2>
+          <div className={styles.aboutSectionContainer}>
+            <div cl
+
+          </div>
+        </div>
       </main>
     </div>
   )
