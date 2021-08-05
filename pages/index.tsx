@@ -15,20 +15,27 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.intro}>
           <h1>Michael Ryan Santos Villanueva</h1>
-          <h2> Mobile / Web / Data </h2>
+          <h2> Full-Stack / Data </h2>
           <h3 className={styles.introSubtitle}>
             Software Developer based in Los Angeles, CA
             <br />
-            Improving the world one line of code at a time.
+            Improving the world one build at a time.
           </h3>
         </div>
         <div className={styles.aboutContainer}>
-          <h2>About</h2>
-          <div className={styles.aboutSectionContainer}>
+          <div className={styles.aboutSectionsContainer}>
             <div className={styles.aboutSection}>
-              
+              <h2>Web / Mobile</h2>
+              <p>web and mobile</p>
             </div>
-
+            <div className={styles.aboutSection}>
+              <h2>Backend</h2>
+              <p>Backend</p>
+            </div>
+            <div className={styles.aboutSection}>
+              <h2>Data</h2>
+              <p>Data</p>
+            </div>
           </div>
         </div>
       </main>

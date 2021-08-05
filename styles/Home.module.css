@@ -30,10 +30,36 @@
   padding: 2em 0 0;
 
   width: 100%;
-  max-height: 300px;
+  max-height: 20em;
 }
 
 .introSubtitle {
   float: left;
   width: 30em;
+}
+
+.aboutContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 2em 0 0;
+
+  width: 100%;
+}
+
+.aboutSectionsContainer {
+  display: inline-grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
+  width: 100%;
+}
+
+.aboutSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 }
