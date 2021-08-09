@@ -37,3 +37,29 @@
   float: left;
   width: 30em;
 }
+
+.aboutContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.aboutSectionsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  width: 100% ;
+
+  animation: 0.5s;
+  animation-name: fadeintop;
+}
+
+.aboutSection {
+  display: block;
+  height: 10em;
+  min-width: 33%;
+}

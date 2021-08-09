@@ -24,9 +24,16 @@ export default function Home() {
         </div>
         <div className={styles.aboutContainer}>
           <h2>About</h2>
-          <div className={styles.aboutSectionContainer}>
-            <div cl
-
+          <div className={styles.aboutSectionsContainer}>
+            <div className={styles.aboutSection}>
+              Hello
+            </div>
+            <div className={styles.aboutSection}>
+              Hello
+            </div>
+            <div className={styles.aboutSection}>
+              Hello
+            </div>
           </div>
         </div>
       </main>
