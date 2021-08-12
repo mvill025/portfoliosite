@@ -1,10 +1,10 @@
-## THIS IS MY VERY PROFESSIONAL SITE
+# THIS IS MY VERY PROFESSIONAL SITE
+This is my professional portfolio site built with Next.js and TS
+
 Soon to be usable links!
 - [`michaelryanvillanueva.com`](https://michaelryanvillanueva.com)
 
-
 ## How to run on your local machine!
-
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, clone!:
