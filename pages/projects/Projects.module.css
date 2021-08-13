@@ -6,6 +6,43 @@
   padding: 0rem 1.5rem;
 }
 
+.top {
+  display: flex;
+  width: 100%;
+
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+.userGithub {
+  display: flex;
+  flex-direction: row;
+
+
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  text-align: left;
+  
+  padding: 1em;
+
+  color: #fff;
+  border-radius: 10px;
+
+  transition: all .3s ease-out ;
+}
+
+.userGithub:hover,
+.userGithub:focus,
+.userGithub:active {
+  color: #fff;
+  border-color: #2f444d;
+  background-color: #2f444d ;
+  transform: scale(1.03); 
+  transition: all .03s linear ;
+}
+
 .projectsContainer {
   display: inline-grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));

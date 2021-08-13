@@ -31,7 +31,7 @@ const JupyterNotebookTag = () => (
   >
     <Image
       src={JupyterNotebookIcon}
-      alt="GitHub"
+      alt="JupyterNotebook"
       height="22px"
       width="22px"
       layout="fixed"
@@ -61,7 +61,7 @@ const TypeScriptTag = () => (
   >
     <Image
       src={RIcon}
-      alt="R"
+      alt="TypeScript"
       height="22px"
       width="28px"
       layout="fixed"
@@ -118,13 +118,16 @@ export const Projects = (props: ProjectsProps) => {
       </Head>
       <NavBar />
       <main className={styles.main}>
-        <h1 style={{ margin: "0.2em 0" }}>My Projects</h1>
+        <div className={styles.top}>
+          <h1 style={{ margin: "0.2em 0" }}>My Projects</h1>
+          <a className={styles.userGithub} href="https://github.com/mvill025">
+            <GitHubTag/>
+            <h2>mvill025</h2>
+          </a>
+        </div>
         <div className={styles.projectsContainer}>
           {projects.map(p => <ProjectCard key={p.id} {...p} />)}
         </div>
-        <p>
-          {JSON.stringify(projects[0], null, "\n")}
-        </p>
       </main>
     </div>
   )

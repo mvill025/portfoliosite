@@ -50,7 +50,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       projects,
       user,
     },
-    revalidate: 300,
+    revalidate: 3600,
   }
 }
 
