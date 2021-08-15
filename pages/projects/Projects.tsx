@@ -128,6 +128,11 @@ export const Projects = (props: ProjectsProps) => {
         <div className={styles.projectsContainer}>
           {projects.map(p => <ProjectCard key={p.id} {...p} />)}
         </div>
+        <div>
+          {Object.keys(projects[0]).map((k: String) => {
+            return <p>{`${k}: ${projects[0][k]}`}</p>
+          })}
+        </div>
       </main>
     </div>
   )
