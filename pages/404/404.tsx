@@ -20,8 +20,8 @@ const NotFound = () => {
               <h1 style={{ fontSize: "1em", margin: "0 0 -4rem 0" }}>404</h1>
               <h2 style={{ fontSize: "0.22em" }}>PAGE NOT FOUND</h2>
             </span>
-            <h1>UH OH! Looks like you're lost!</h1>
-            <h1>LET'S GET YOU BACK HOME</h1>
+            <h1>UH OH! Looks like you&apos;re lost!</h1>
+            <h1>LET&apos;S GET YOU BACK HOME</h1>
           </a>
         </Link>
       </main>
