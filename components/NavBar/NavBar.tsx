@@ -12,22 +12,38 @@ interface Tab {
 const TABS: Tab[] = [
   { title: "HOME",      path: "/",          type: "link"  },
   { title: "PROJECTS",  path: "/projects",  type: "link"  },
-  { title: "RESUME",    path: "/resume",    type: "dl"    },
+  { title: "RESUME",    path: "/MichaelRyanSantosVillanuevaResume.pdf",    type: "dl"    },
 ];
 
 const Tab = (tab: Tab) => {
-  const { title, path } = tab;
-  return (
-    <div className={styles.tabContainer} key={title}>
-      <button className={styles.tab}>
-        <Link href={path}>
-          <a style={{ padding: "0 0.5em" }}>
-            {title}
-           </a>
-        </Link>
-      </button>
-    </div>
-  );
+  const { title, path, type } = tab;
+  if ( type === "link" ) {
+    return (
+      <div className={styles.tabContainer} key={title}>
+        <button className={styles.tab}>
+          <Link href={path}>
+            <a style={{ padding: "0 0.5em" }}>
+              {title}
+            </a>
+          </Link>
+        </button>
+      </div>
+    );
+  }
+  
+  if ( type === "dl" ) {
+    return (
+      <div className={styles.tabContainer} key={title}>
+        <button className={styles.tab}>
+          <Link href={path}>
+            <a style={{ padding: "0 0.5em" }}>
+              {title}
+            </a>
+          </Link>
+        </button>
+      </div>
+    );
+  }
 }
 
 export const NavBar = () => {
