@@ -1,6 +1,6 @@
 export interface ProjectsProps {
   user: any,
-  projects: Project[],
+  gitHubProjects: Project[],
   isLoading: boolean,
 }
 

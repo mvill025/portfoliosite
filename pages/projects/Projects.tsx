@@ -8,6 +8,7 @@ import styles from "./Projects.module.css";
 import GitHubIcon from "../../public/GitHub-Mark-64px.png"
 import RIcon from "../../public/r-programming-language.png"
 import JupyterNotebookIcon from "../../public/Jupyter_logo.svg"
+import TSIcon from "../../public/ts-logo-128.png"
 
 const GitHubTag = () => (
   <div
@@ -57,10 +58,10 @@ const RTag = () => (
 const TypeScriptTag = () => (
   <div
     className={styles.tagImage}
-    style={{ backgroundColor: "#1F40B4" }}
+    style={{ backgroundColor: "#3178C6" }}
   >
     <Image
-      src={RIcon}
+      src={TSIcon}
       alt="TypeScript"
       height="22px"
       width="28px"
@@ -97,6 +98,7 @@ const ProjectCard = ({ id, title, about, url, tags }: Project) => {
             case "github": return <GitHubTag key={tag} />
             case "R": return <RTag key={tag} />
             case "Jupyter Notebook": return <JupyterNotebookTag key={tag} />
+            case "TypeScript": return <TypeScriptTag key={tag} />
             case null: return
             default: return <TextTag key={tag} text={tag} />
           }
@@ -108,7 +110,7 @@ const ProjectCard = ({ id, title, about, url, tags }: Project) => {
 
 export const Projects = (props: ProjectsProps) => {
   const {
-    projects = [],
+    gitHubProjects = [],
   } = props;
 
   return (
@@ -126,7 +128,7 @@ export const Projects = (props: ProjectsProps) => {
           </a>
         </div>
         <div className={styles.projectsContainer}>
-          {projects.map(p => <ProjectCard key={p.id} {...p} />)}
+          {gitHubProjects.map(p => <ProjectCard key={p.id} {...p} />)}
         </div>
       </main>
     </div>

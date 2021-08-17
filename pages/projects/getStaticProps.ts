@@ -6,7 +6,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const octokit = new Octokit()
   const user = await octokit.request("GET /users/mvill025")
     .then(r => r.data)
-  const projects: Project[] = await octokit.request(
+  const gitHubProjects: Project[] = await octokit.request(
     "GET /users/mvill025/repos",
     { sort: "updated" }
   )
@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
-      projects,
+      gitHubProjects,
       user,
     },
     revalidate: 3600,
