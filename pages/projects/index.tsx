@@ -1,14 +1,76 @@
-import { GetStaticProps } from 'next';
+import ProjectsPage from './Projects'
+import { GetStaticProps } from "next"
+import { Octokit } from "@octokit/core";
+
 import Head from 'next/head';
 import Image from 'next/image';
 import React from 'react';
 import NavBar from '../../components/NavBar';
-import { Project, ProjectsProps } from './models';
+import { Project, ProjectsProps } from '../../models/ProjectsPage';
 import styles from "./Projects.module.css";
 import GitHubIcon from "../../public/GitHub-Mark-64px.png"
 import RIcon from "../../public/r-programming-language.png"
 import JupyterNotebookIcon from "../../public/Jupyter_logo.svg"
 import TSIcon from "../../public/ts-logo-128.png"
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const octokit = new Octokit()
+  const user = await octokit.request("GET /users/mvill025")
+    .then(r => r.data)
+  const gitHubProjects: Project[] = await octokit.request(
+    "GET /users/mvill025/repos",
+    { sort: "updated" }
+  )
+    .then(r => r.data)
+    .catch(error => { console.error(error); return [] })
+    .then(r => r.slice(0, 6))
+    .then(r => {
+      return Promise.all(r.map(async (r: any) => {
+        var title = r.name
+          .replace(/\-/g, ' ')
+          .replace(/([a-z])([A-Z])/g, '$1 $2')
+          .replace(
+            /\w\S*/g,
+            (a: string) =>
+              a.charAt(0).toUpperCase() + a.substr(1).toLowerCase()
+          )
+
+        var project: Project = {
+          id: r.id,
+          title,
+          about: r.description,
+          url: r.html_url,
+          tags: [
+            "github",
+            r.language
+          ]
+        }
+
+        // add data analytics tag
+        if (
+          r.language === "R" ||
+          r.language === "Jupyter Notebook"
+        ) {
+          project.tags?.push("Data Analytics")
+        }
+
+        return {
+          ...r,
+          ...project,
+        }
+
+      }))
+    })
+
+  return {
+    props: {
+      gitHubProjects,
+      user,
+    },
+    revalidate: 3600,
+  }
+}
+
 
 const GitHubTag = () => (
   <div
@@ -123,7 +185,7 @@ export const Projects = (props: ProjectsProps) => {
         <div className={styles.top}>
           <h1 style={{ margin: "0.2em 0" }}>My Projects</h1>
           <a className={styles.userGithub} href="https://github.com/mvill025">
-            <GitHubTag/>
+            <GitHubTag />
             <h2>mvill025</h2>
           </a>
         </div>
