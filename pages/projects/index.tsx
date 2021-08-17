@@ -1,4 +1,3 @@
-import ProjectsPage from './Projects'
 import { GetStaticProps } from "next"
 import { Octokit } from "@octokit/core";
 
