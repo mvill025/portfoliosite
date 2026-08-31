@@ -89,6 +89,15 @@ There is **no server-side enforcement**. GitHub itself will accept a push to
 `main`; these hooks are the entire rule. That is precisely why bypassing them
 is not a judgement call an agent gets to make.
 
+Two properties of tracked hooks worth knowing:
+
+- They live in the working tree, so `pre-commit` only fires on branches that
+  actually contain `.githooks/`. `pre-push` still blocks `main` from anywhere,
+  since you always push *from* a branch that has them.
+- A clone that never runs `pnpm install` has no hooks at all, because
+  `core.hooksPath` is local config and is not cloned. If you are an agent
+  starting work in a fresh checkout, run `pnpm install` first.
+
 The workflow, every time:
 
 ```bash
