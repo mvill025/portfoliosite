@@ -85,18 +85,30 @@ automatically by the `prepare` script on `pnpm install`):
 - **`pre-push`** rejects any push whose target ref is `main` or `master` —
   including `HEAD:main` refspecs, force pushes, and branch deletes.
 
-There is **no server-side enforcement**. GitHub itself will accept a push to
-`main`; these hooks are the entire rule. That is precisely why bypassing them
-is not a judgement call an agent gets to make.
+### Server-side ruleset — the authoritative layer
 
-Two properties of tracked hooks worth knowing:
+`main` is protected by a GitHub ruleset named `protect-main`. This is the rule
+that actually cannot be bypassed:
+
+- Direct pushes to `main` are rejected by GitHub with `GH013`, from any machine
+  or account. `bypass_actors` is empty, so nobody can override it — not even
+  the repository owner.
+- Force-pushes (`non_fast_forward`) and deletion of `main` are blocked.
+- The `check` CI job must pass before a PR can merge.
+- **`--no-verify` does not help.** It skips the local hooks; the server rejects
+  the push anyway. This was verified against a live push, not assumed.
+
+### Local hooks — the fast-feedback layer
+
+The hooks fail in milliseconds instead of after a network round trip, and stop
+work from landing on `main` locally in the first place. Two properties worth
+knowing:
 
 - They live in the working tree, so `pre-commit` only fires on branches that
-  actually contain `.githooks/`. `pre-push` still blocks `main` from anywhere,
-  since you always push *from* a branch that has them.
+  actually contain `.githooks/`.
 - A clone that never runs `pnpm install` has no hooks at all, because
-  `core.hooksPath` is local config and is not cloned. If you are an agent
-  starting work in a fresh checkout, run `pnpm install` first.
+  `core.hooksPath` is local config and is not cloned. Run `pnpm install` first.
+  The server-side ruleset still applies either way.
 
 The workflow, every time:
 
