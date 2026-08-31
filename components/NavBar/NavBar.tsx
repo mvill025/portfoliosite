@@ -1,62 +1,49 @@
-import React from "react"
-import Link from 'next/link';
-import styles from './NavBar.module.css'
-
+import Link from "next/link";
+import styles from "./NavBar.module.css";
 
 interface Tab {
-  title: string,
-  path: string,
-  type: string
+  title: string;
+  path: string;
+  type: "link" | "download";
 }
 
 const TABS: Tab[] = [
-  { title: "HOME",      path: "/",          type: "link"  },
-  { title: "PROJECTS",  path: "/projects",  type: "link"  },
-  { title: "RESUME",    path: "/MichaelRyanSantosVillanuevaResume.pdf",    type: "dl"    },
+  { title: "HOME", path: "/", type: "link" },
+  { title: "PROJECTS", path: "/projects", type: "link" },
+  {
+    title: "RESUME",
+    path: "/MichaelRyanSantosVillanuevaResume.pdf",
+    type: "download",
+  },
 ];
 
-const Tab = (tab: Tab) => {
-  const { title, path, type } = tab;
-  if ( type === "link" ) {
-    return (
-      <div className={styles.tabContainer} key={title}>
-        <button className={styles.tab}>
-          <Link href={path}>
-            <a style={{ padding: "0 0.5em" }}>
-              {title}
-            </a>
-          </Link>
-        </button>
-      </div>
-    );
-  }
-  
-  if ( type === "dl" ) {
-    return (
-      <div className={styles.tabContainer} key={title}>
-        <button className={styles.tab}>
-          <Link href={path}>
-            <a style={{ padding: "0 0.5em" }}>
-              {title}
-            </a>
-          </Link>
-        </button>
-      </div>
-    );
-  }
-}
+const Tab = ({ title, path, type }: Tab) => (
+  <div className={styles.tabContainer}>
+    <button className={styles.tab}>
+      {type === "download" ? (
+        <a href={path} style={{ padding: "0 0.5em" }} download>
+          {title}
+        </a>
+      ) : (
+        <Link href={path} style={{ padding: "0 0.5em" }}>
+          {title}
+        </Link>
+      )}
+    </button>
+  </div>
+);
 
-export const NavBar = () => {
-  return (
-    <nav className={styles.container}>
-      <div className={styles.navContent}>
-        <h1 style={{ padding: "0 1em" }}>{""}</h1>
-        <div className={styles.tabsContainer}>
-          {TABS.map(Tab)}
-        </div>
+export const NavBar = () => (
+  <nav className={styles.container}>
+    <div className={styles.navContent}>
+      <h1 style={{ padding: "0 1em" }}>{""}</h1>
+      <div className={styles.tabsContainer}>
+        {TABS.map((tab) => (
+          <Tab key={tab.title} {...tab} />
+        ))}
       </div>
-    </nav>
-  )
-}
+    </div>
+  </nav>
+);
 
-export default NavBar
+export default NavBar;
