@@ -77,8 +77,17 @@ public/           Static assets, incl. resume PDF
 
 **`main` is protected. You may open pull requests against it. You may never push to it.**
 
-This is enforced by a `pre-push` hook in `.githooks/`, wired up by `core.hooksPath`
-(set automatically by the `prepare` script on `pnpm install`).
+Two hooks in `.githooks/` enforce this, wired up by `core.hooksPath` (set
+automatically by the `prepare` script on `pnpm install`):
+
+- **`pre-commit`** rejects any commit made while on `main` or `master`, so work
+  never accumulates there in the first place.
+- **`pre-push`** rejects any push whose target ref is `main` or `master` —
+  including `HEAD:main` refspecs, force pushes, and branch deletes.
+
+There is **no server-side enforcement**. GitHub itself will accept a push to
+`main`; these hooks are the entire rule. That is precisely why bypassing them
+is not a judgement call an agent gets to make.
 
 The workflow, every time:
 

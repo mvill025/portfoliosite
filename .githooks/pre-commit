@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# Blocks commits made directly on a protected branch. Catches the problem one
+# step earlier than pre-push: without this, an agent can pile commits onto main,
+# fail at push time, and then have to untangle them.
+#
+# Emergency override (humans only):
+#   git commit --no-verify
+
+set -uo pipefail
+
+PROTECTED_BRANCHES="main master"
+
+branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo '')"
+
+for protected in $PROTECTED_BRANCHES; do
+  if [ "$branch" = "$protected" ]; then
+    cat >&2 <<MSG
+
+  ┌───────────────────────────────────────────────────────────┐
+  │  BLOCKED: commit directly on '$protected'
+  └───────────────────────────────────────────────────────────┘
+
+  Work does not get committed on '$protected'. Move it to a branch:
+
+    git switch -c descriptive-branch-name
+    git commit
+    git push -u origin descriptive-branch-name
+    gh pr create --base $protected
+
+  Your staged changes are untouched — switching branches carries
+  them with you.
+
+  Agents: do not bypass this with --no-verify.
+
+MSG
+    exit 1
+  fi
+done
+
+exit 0
