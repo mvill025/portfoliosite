@@ -1,13 +1,16 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import NavBar from '../components/NavBar'
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import NavBar from "../components/NavBar";
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
         <title>Michael Ryan Santos Villanueva</title>
-        <meta name="Michael Ryan Santos Villanueva" content="Everything you need to know about dis dude" />
+        <meta
+          name="Michael Ryan Santos Villanueva"
+          content="Everything you need to know about dis dude"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />
@@ -39,5 +42,5 @@ export default function Home() {
         </div>
       </main>
     </div>
-  )
+  );
 }

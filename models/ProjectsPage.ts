@@ -1,13 +1,11 @@
 export interface ProjectsProps {
-  user: any,
-  gitHubProjects: Project[],
-  isLoading: boolean,
+  gitHubProjects: Project[];
 }
 
 export interface Project {
-  id: string,
-  title: string,
-  about: string,
-  url: string,
-  tags?: string[],
+  id: number;
+  title: string;
+  about: string | null;
+  url: string;
+  tags: (string | null)[];
 }

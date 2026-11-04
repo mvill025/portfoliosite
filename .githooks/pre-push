@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+#
+# Blocks direct pushes to protected branches. Changes reach main via pull request.
+# Enabled by `core.hooksPath=.githooks`, set automatically by the `prepare` script.
+#
+# Emergency override (humans only, and think first):
+#   git push --no-verify
+
+set -uo pipefail
+
+PROTECTED_BRANCHES="main master"
+
+blocked=""
+
+# git feeds one line per ref being pushed:
+#   <local ref> <local sha> <remote ref> <remote sha>
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  [ -z "${remote_ref:-}" ] && continue
+  branch="${remote_ref#refs/heads/}"
+  for protected in $PROTECTED_BRANCHES; do
+    if [ "$branch" = "$protected" ]; then
+      blocked="$branch"
+    fi
+  done
+done
+
+if [ -n "$blocked" ]; then
+  current="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?')"
+  cat >&2 <<MSG
+
+  ┌───────────────────────────────────────────────────────────┐
+  │  BLOCKED: direct push to '$blocked'
+  └───────────────────────────────────────────────────────────┘
+
+  This repository does not accept direct pushes to '$blocked'.
+  Everything lands through a pull request.
+
+  You are on: $current
+
+  Instead:
+
+    git switch -c my-change        # if you are on $blocked
+    git push -u origin my-change
+    gh pr create --base $blocked
+
+  Agents: do not bypass this with --no-verify. Open a PR and stop
+  there. Merging is a human decision.
+
+MSG
+  exit 1
+fi
+
+exit 0

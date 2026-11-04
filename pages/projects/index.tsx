@@ -1,199 +1,176 @@
-import { GetStaticProps } from "next"
+import type { GetStaticProps } from "next";
 import { Octokit } from "@octokit/core";
 
-import Head from 'next/head';
-import Image from 'next/image';
-import React from 'react';
-import NavBar from '../../components/NavBar';
-import { Project, ProjectsProps } from '../../models/ProjectsPage';
+import Head from "next/head";
+import Image, { type StaticImageData } from "next/image";
+import NavBar from "../../components/NavBar";
+import type { Project, ProjectsProps } from "../../models/ProjectsPage";
 import styles from "./Projects.module.css";
-import GitHubIcon from "../../public/GitHub-Mark-64px.png"
-import RIcon from "../../public/r-programming-language.png"
-import JupyterNotebookIcon from "../../public/Jupyter_logo.svg"
-import TSIcon from "../../public/ts-logo-128.png"
+import GitHubIcon from "../../public/GitHub-Mark-64px.png";
+import RIcon from "../../public/r-programming-language.png";
+import JupyterNotebookIcon from "../../public/Jupyter_logo.svg";
+import TSIcon from "../../public/ts-logo-128.png";
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const octokit = new Octokit()
-  const user = await octokit.request("GET /users/mvill025")
-    .then(r => r.data)
-  const gitHubProjects: Project[] = await octokit.request(
-    "GET /users/mvill025/repos",
-    { sort: "updated" }
-  )
-    .then(r => r.data)
-    .catch(error => { console.error(error); return [] })
-    .then(r => r.slice(0, 6))
-    .then(r => {
-      return Promise.all(r.map(async (r: any) => {
-        var title = r.name
-          .replace(/\-/g, ' ')
-          .replace(/([a-z])([A-Z])/g, '$1 $2')
-          .replace(
-            /\w\S*/g,
-            (a: string) =>
-              a.charAt(0).toUpperCase() + a.substr(1).toLowerCase()
-          )
+const GITHUB_USER = "mvill025";
+const MAX_PROJECTS = 6;
 
-        var project: Project = {
-          id: r.id,
-          title,
-          about: r.description,
-          url: r.html_url,
-          tags: [
-            "github",
-            r.language
-          ]
-        }
+/** "my-cool-repo" / "myCoolRepo" -> "My Cool Repo" */
+const toTitleCase = (name: string): string =>
+  name
+    .replace(/-/g, " ")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(
+      /\w\S*/g,
+      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+    );
 
-        // add data analytics tag
-        if (
-          r.language === "R" ||
-          r.language === "Jupyter Notebook"
-        ) {
-          project.tags?.push("Data Analytics")
-        }
+export const getStaticProps: GetStaticProps<ProjectsProps> = async () => {
+  const octokit = new Octokit();
 
-        return {
-          ...r,
-          ...project,
-        }
+  let gitHubProjects: Project[] = [];
 
-      }))
-    })
+  try {
+    const { data } = await octokit.request("GET /users/{username}/repos", {
+      username: GITHUB_USER,
+      sort: "updated",
+      per_page: MAX_PROJECTS,
+    });
+
+    gitHubProjects = data.map((repo) => {
+      const tags: (string | null)[] = ["github", repo.language ?? null];
+
+      if (repo.language === "R" || repo.language === "Jupyter Notebook") {
+        tags.push("Data Analytics");
+      }
+
+      return {
+        id: Number(repo.id),
+        title: toTitleCase(repo.name),
+        about: repo.description ?? null,
+        url: repo.html_url,
+        tags,
+      };
+    });
+  } catch (error) {
+    console.error("Failed to fetch GitHub repos:", error);
+  }
 
   return {
-    props: {
-      gitHubProjects,
-      user,
-    },
+    props: { gitHubProjects },
     revalidate: 3600,
-  }
-}
+  };
+};
 
+const ImageTag = ({
+  src,
+  alt,
+  width,
+  backgroundColor,
+}: {
+  src: StaticImageData;
+  alt: string;
+  width: number;
+  backgroundColor: string;
+}) => (
+  <div className={styles.tagImage} style={{ backgroundColor }}>
+    <Image src={src} alt={alt} height={22} width={width} />
+  </div>
+);
 
 const GitHubTag = () => (
-  <div
-    className={styles.tagImage}
-    style={{ backgroundColor: "#fff" }}
-  >
-    <Image
-      src={GitHubIcon}
-      alt="GitHub"
-      height="22px"
-      width="22px"
-      layout="fixed"
-    />
-  </div>
-)
+  <ImageTag src={GitHubIcon} alt="GitHub" width={22} backgroundColor="#fff" />
+);
 
-const JupyterNotebookTag = () => (
-  <div
-    className={styles.tagImage}
-    style={{ backgroundColor: "#fff" }}
-  >
-    <Image
-      src={JupyterNotebookIcon}
-      alt="JupyterNotebook"
-      height="22px"
-      width="22px"
-      layout="fixed"
-    />
-  </div>
-)
-
-const RTag = () => (
-  <div
-    className={styles.tagImage}
-    style={{ backgroundColor: "#1F40B4" }}
-  >
-    <Image
-      src={RIcon}
-      alt="R"
-      height="22px"
-      width="28px"
-      layout="fixed"
-    />
-  </div>
-)
-
-const TypeScriptTag = () => (
-  <div
-    className={styles.tagImage}
-    style={{ backgroundColor: "#3178C6" }}
-  >
-    <Image
-      src={TSIcon}
-      alt="TypeScript"
-      height="22px"
-      width="28px"
-      layout="fixed"
-    />
-  </div>
-)
-
-const TextTag = ({ text }: any) => (
+const TextTag = ({ text }: { text: string }) => (
   <div className={styles.tagText}>
     <h3>{text}</h3>
   </div>
-)
+);
 
-const ProjectCard = ({ id, title, about, url, tags }: Project) => {
-  return (
-    <a className={styles.card} key={id} href={url} >
-      <span>
-        <h2
-          style={{
-            whiteSpace: "nowrap",
-            overflowX: "hidden",
-            textOverflow: "ellipsis",
-            maxWidth: "97%",
-          }}
+const ProjectCard = ({ title, about, url, tags }: Project) => (
+  <a className={styles.card} href={url}>
+    <span>
+      <h2
+        style={{
+          whiteSpace: "nowrap",
+          overflowX: "hidden",
+          textOverflow: "ellipsis",
+          maxWidth: "97%",
+        }}
+      >
+        {title}
+      </h2>
+      <h3 className={styles.cardAbout}>{about}</h3>
+    </span>
+    <span className={styles.tagsContainer}>
+      {tags.map((tag) => {
+        switch (tag) {
+          case "github":
+            return <GitHubTag key={tag} />;
+          case "R":
+            return (
+              <ImageTag
+                key={tag}
+                src={RIcon}
+                alt="R"
+                width={28}
+                backgroundColor="#1F40B4"
+              />
+            );
+          case "Jupyter Notebook":
+            return (
+              <ImageTag
+                key={tag}
+                src={JupyterNotebookIcon}
+                alt="Jupyter Notebook"
+                width={22}
+                backgroundColor="#fff"
+              />
+            );
+          case "TypeScript":
+            return (
+              <ImageTag
+                key={tag}
+                src={TSIcon}
+                alt="TypeScript"
+                width={28}
+                backgroundColor="#3178C6"
+              />
+            );
+          case null:
+            return null;
+          default:
+            return <TextTag key={tag} text={tag} />;
+        }
+      })}
+    </span>
+  </a>
+);
+
+export const Projects = ({ gitHubProjects = [] }: ProjectsProps) => (
+  <div className={styles.container}>
+    <Head>
+      <title>Awesome Projects</title>
+    </Head>
+    <NavBar />
+    <main className={styles.main}>
+      <div className={styles.top}>
+        <h1 style={{ margin: "0.2em 0" }}>My Projects</h1>
+        <a
+          className={styles.userGithub}
+          href={`https://github.com/${GITHUB_USER}`}
         >
-          {title}
-        </h2>
-        <h3 className={styles.cardAbout}>{about}</h3>
-      </span>
-      <span className={styles.tagsContainer}>
-        {tags?.map(tag => {
-          switch (tag) {
-            case "github": return <GitHubTag key={tag} />
-            case "R": return <RTag key={tag} />
-            case "Jupyter Notebook": return <JupyterNotebookTag key={tag} />
-            case "TypeScript": return <TypeScriptTag key={tag} />
-            case null: return
-            default: return <TextTag key={tag} text={tag} />
-          }
-        })}
-      </span>
-    </a>
-  )
-}
-
-export const Projects = (props: ProjectsProps) => {
-  const {
-    gitHubProjects = [],
-  } = props;
-
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Awesome Projects</title>
-      </Head>
-      <NavBar />
-      <main className={styles.main}>
-        <div className={styles.top}>
-          <h1 style={{ margin: "0.2em 0" }}>My Projects</h1>
-          <a className={styles.userGithub} href="https://github.com/mvill025">
-            <GitHubTag />
-            <h2>mvill025</h2>
-          </a>
-        </div>
-        <div className={styles.projectsContainer}>
-          {gitHubProjects.map(p => <ProjectCard key={p.id} {...p} />)}
-        </div>
-      </main>
-    </div>
-  )
-}
+          <GitHubTag />
+          <h2>{GITHUB_USER}</h2>
+        </a>
+      </div>
+      <div className={styles.projectsContainer}>
+        {gitHubProjects.map((p) => (
+          <ProjectCard key={p.id} {...p} />
+        ))}
+      </div>
+    </main>
+  </div>
+);
 
 export default Projects;

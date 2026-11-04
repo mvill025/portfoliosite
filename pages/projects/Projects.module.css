@@ -23,13 +23,13 @@
   justify-content: space-between;
   align-items: baseline;
   text-align: left;
-  
+
   padding: 0.5em 0.5em 0.2em;
 
   color: #fff;
   border-radius: 2px;
 
-  transition: all .3s ease-out ;
+  transition: all 0.3s ease-out;
 }
 
 .userGithub:hover,
@@ -37,8 +37,8 @@
 .userGithub:active {
   color: #fff;
   border-color: #2f444d;
-  background-color: #2f444d ;
-  transition: all .03s linear ;
+  background-color: #2f444d;
+  transition: all 0.03s linear;
 }
 
 .projectsContainer {
@@ -48,7 +48,7 @@
   column-gap: 1rem;
   row-gap: 1rem;
 
-  width: 100% ;
+  width: 100%;
 
   animation: 0.5s;
   animation-name: fadeintop;
@@ -61,15 +61,15 @@
   text-align: left;
 
   word-wrap: ellipsis;
-  
+
   padding: 1rem;
-  
+
   font-size: 1.7rem;
   color: #fff;
   text-decoration: none;
   border: 1px solid #eaeaea5b;
   border-radius: 10px;
-  transition: all .3s ease-out ;
+  transition: all 0.3s ease-out;
 }
 
 .card:hover,
@@ -77,21 +77,21 @@
 .card:active {
   color: #fff;
   border-color: #2f444d;
-  background-color: #2f444d ;
-  transform: scale(1.03); 
-  transition: all .03s linear ;
+  background-color: #2f444d;
+  transform: scale(1.03);
+  transition: all 0.03s linear;
 }
 
 .cardAbout {
   font-weight: normal;
   font-size: 1rem;
   line-height: 1em;
-  
+
   height: 3em;
   max-width: 99%;
 
   margin-top: 0.3em;
-  
+
   overflow-y: hidden;
 
   word-wrap: break-word;
@@ -112,10 +112,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   height: 30px;
   width: 30px;
-  
+
   padding: 0.15em;
   margin-right: 3px;
 
@@ -128,7 +128,7 @@
   align-items: center;
 
   border-radius: 2px;
-  
+
   font-size: 8px;
   text-align: center;
   vertical-align: middle;
