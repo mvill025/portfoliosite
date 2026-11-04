@@ -22,6 +22,7 @@ Personal portfolio for Michael Ryan Santos Villanueva. Deployed on Vercel.
 | ESLint | 9.x | Pinned — see Version ceilings |
 | Prettier | 3.9.6 | |
 | Package manager | pnpm 11.21.0 | Do not use npm or yarn |
+| Node | 24.x | Pinned via `engines` — see Deployment |
 
 ## Commands
 
@@ -64,6 +65,26 @@ public/           Static assets, incl. resume PDF
 - **Components are function expressions** returning JSX, with a default export plus an `index.ts` barrel.
 - Import static images and pass them to `next/image` — never a bare `src` string for local assets.
 - `next/link` renders its own `<a>`. Never nest an `<a>` inside `<Link>` — that was the Next 11 pattern and it is now an error.
+
+## Deployment
+
+Vercel builds `main` and serves michaelryanvillanueva.com. Pushes to `main`
+deploy automatically; a failed build leaves the previous deploy live.
+
+`package.json` pins `engines.node` to `24.x`. That is load-bearing, not
+decoration:
+
+- Vercel reads `engines.node` and it **overrides** the Node version set in the
+  project dashboard. This repo's Vercel project was configured in 2021, so the
+  dashboard value cannot be trusted; the pin is what makes the build
+  reproducible.
+- Vercel resolves a semver *range* to the highest supported major, so `>=24`
+  would float to 26.x. Write `24.x` to actually get 24.
+- Vercel supports 26.x (default), 24.x and 22.x. Node 20 was deprecated on
+  2026-10-01. Next 16 itself requires >=20.9.
+
+Keep the pin, CI's `node-version`, and local Node on the same major. Moving to
+26.x is fine but means re-running the full check and build on 26 first.
 
 ## Gotchas
 
